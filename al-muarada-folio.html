@@ -1,0 +1,517 @@
+<title>المعارضة المكتومة</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&display=swap">
+<style>
+  /* Layout: one illuminated folio, gilt double frame, argument steps with kufic marginal labels on the start (right) side; compass sketches drawn faintly behind the page. */
+  :root {
+    --paper: #EAE5D3;
+    --paper-wash: rgba(234, 229, 211, 0.86);
+    --ink: #262017;
+    --ink-soft: #5A503E;
+    --lapis: #1E4877;
+    --gilt: #9C7629;
+    --gilt-faint: rgba(156, 118, 41, 0.35);
+    --sketch: #5B4A2E;
+    --stain: rgba(140, 104, 48, 0.10);
+    --sketch-alpha: 0.24;
+
+    --f-display: "Aref Ruqaa", "Amiri", "Traditional Arabic", serif;
+    --f-body: "Amiri", "Traditional Arabic", "Times New Roman", serif;
+    --f-label: "Reem Kufi", "Amiri", "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #13161D;
+      --paper-wash: rgba(19, 22, 29, 0.84);
+      --ink: #E7DDC5;
+      --ink-soft: #A99E86;
+      --lapis: #8EB2E2;
+      --gilt: #CDA85C;
+      --gilt-faint: rgba(205, 168, 92, 0.32);
+      --sketch: #CDB88E;
+      --stain: rgba(205, 168, 92, 0.05);
+      --sketch-alpha: 0.13;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #13161D;
+    --paper-wash: rgba(19, 22, 29, 0.84);
+    --ink: #E7DDC5;
+    --ink-soft: #A99E86;
+    --lapis: #8EB2E2;
+    --gilt: #CDA85C;
+    --gilt-faint: rgba(205, 168, 92, 0.32);
+    --sketch: #CDB88E;
+    --stain: rgba(205, 168, 92, 0.05);
+    --sketch-alpha: 0.13;
+    color-scheme: dark;
+  }
+
+  html { background: var(--paper); }
+  body {
+    background:
+      radial-gradient(ellipse 38% 28% at 12% 78%, var(--stain), transparent 70%),
+      radial-gradient(ellipse 30% 22% at 88% 18%, var(--stain), transparent 70%),
+      radial-gradient(ellipse 120% 90% at 50% 50%, transparent 60%, var(--stain) 100%),
+      var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    min-height: 100%;
+  }
+
+  #sketch {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: clamp(28px, 6vw, 72px);
+  }
+
+  .folio {
+    position: relative;
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: clamp(28px, 6vw, 64px) clamp(20px, 5.5vw, 64px);
+    background: radial-gradient(ellipse 85% 80% at 50% 45%, var(--paper-wash) 55%, transparent 100%);
+    border: 1px solid var(--gilt);
+    outline: 1px solid var(--gilt-faint);
+    outline-offset: 6px;
+  }
+  .folio::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 0.5px solid var(--gilt-faint);
+    pointer-events: none;
+  }
+
+  .corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    color: var(--gilt);
+    background: var(--paper);
+  }
+  .corner.tr { top: -15px; right: -15px; }
+  .corner.tl { top: -15px; left: -15px; }
+  .corner.br { bottom: -15px; right: -15px; }
+  .corner.bl { bottom: -15px; left: -15px; }
+
+  header {
+    display: grid;
+    justify-items: center;
+    gap: 0.6rem;
+    text-align: center;
+    margin-bottom: clamp(1.8rem, 4vw, 2.8rem);
+  }
+  .eyebrow {
+    font-family: var(--f-label);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--gilt);
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 7vw, 3.9rem);
+    line-height: 1.35;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .sub {
+    margin: 0;
+    max-width: 30rem;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--ink-soft);
+    text-wrap: balance;
+  }
+
+  .rule {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: min(100%, 22rem);
+    color: var(--gilt);
+  }
+  .rule::before, .rule::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to left, transparent, var(--gilt));
+  }
+  .rule::after { background: linear-gradient(to right, transparent, var(--gilt)); }
+  .rule svg { width: 20px; height: 20px; flex: none; }
+
+  .argument {
+    display: grid;
+    gap: clamp(1.4rem, 3.5vw, 2.2rem);
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .tag {
+    position: relative;
+    padding-top: 0.75rem;
+    font-family: var(--f-label);
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--lapis);
+    border-top: 1px solid var(--gilt-faint);
+  }
+  .tag small {
+    display: block;
+    margin-top: 0.15rem;
+    font-weight: 400;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .step p {
+    margin: 0;
+    max-width: 38rem;
+    font-size: clamp(1.25rem, 2.6vw, 1.42rem);
+    line-height: 2.15;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+
+  .rubric {
+    font-weight: 700;
+    color: var(--lapis);
+  }
+
+  .objection p { color: var(--ink-soft); }
+
+  .marked {
+    text-decoration: underline;
+    text-decoration-color: var(--gilt);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.5em;
+    font-weight: 700;
+  }
+
+  .pull {
+    position: relative;
+    margin: clamp(0.6rem, 2vw, 1.2rem) 0;
+    padding: clamp(1.6rem, 4vw, 2.4rem) clamp(0.5rem, 4vw, 2.5rem);
+    text-align: center;
+    border-block: 1px solid var(--gilt-faint);
+  }
+  .pull .tag {
+    border: 0;
+    padding: 0;
+    margin-bottom: 0.9rem;
+  }
+  .pull blockquote {
+    margin: 0 auto;
+    max-width: 34rem;
+    font-family: var(--f-body);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4.6vw, 2.25rem);
+    line-height: 1.95;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .pull blockquote em {
+    font-style: normal;
+    color: var(--gilt);
+  }
+
+  .closing {
+    display: grid;
+    justify-items: center;
+    gap: 0.9rem;
+    margin-top: clamp(1.8rem, 4vw, 2.6rem);
+    text-align: center;
+  }
+  .closing .seal {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 5.6vw, 2.9rem);
+    line-height: 1.5;
+    color: var(--lapis);
+  }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 1.5rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--gilt-faint);
+    font-family: var(--f-label);
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+  footer b { font-weight: 500; color: var(--gilt); }
+
+  @media (max-width: 600px) {
+    .step {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.6rem;
+    }
+    .tag {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      padding-top: 0;
+      border-top: 0;
+    }
+    .tag small { margin: 0; }
+    .step p { text-align: start; }
+    .corner { width: 24px; height: 24px; }
+    .corner.tr, .corner.tl { top: -12px; }
+    .corner.br, .corner.bl { bottom: -12px; }
+    .corner.tr, .corner.br { right: -12px; }
+    .corner.tl, .corner.bl { left: -12px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    #sketch { animation: fade 1.8s ease-out both; }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  }
+</style>
+
+<canvas id="sketch" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="star8" viewBox="0 0 40 40">
+      <g fill="none" stroke="currentColor" stroke-width="1.6">
+        <rect x="9" y="9" width="22" height="22"/>
+        <rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/>
+        <circle cx="20" cy="20" r="4.2"/>
+      </g>
+      <circle cx="20" cy="20" r="1.6" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="page" dir="rtl" lang="ar">
+  <article class="folio">
+    <svg class="corner tr" aria-hidden="true"><use href="#star8"/></svg>
+    <svg class="corner tl" aria-hidden="true"><use href="#star8"/></svg>
+    <svg class="corner br" aria-hidden="true"><use href="#star8"/></svg>
+    <svg class="corner bl" aria-hidden="true"><use href="#star8"/></svg>
+
+    <header>
+      <span class="eyebrow">فصلٌ في إعجاز القرآن</span>
+      <h1>شبهة المعارضة المكتومة</h1>
+      <p class="sub">في الرد على من زعم أن القرآن قد عورض، ثم كُتمت معارضته فلم تبلغنا</p>
+      <div class="rule" aria-hidden="true"><svg><use href="#star8"/></svg></div>
+    </header>
+
+    <div class="argument">
+      <section class="step objection">
+        <div class="tag">الاعتراض<small>دعوى الخصم</small></div>
+        <p><span class="rubric">فإن قيل</span> ما أنكرتم أن القوم قد عارضوه ولكنه لم ينقل إلينا وغيِّب عنا ذكره، وكتم الخبر فيه لما اتسع الإسلام وخافوا على أنفسهم، فانقطع رسمه وامحى أثره.</p>
+      </section>
+
+      <section class="step">
+        <div class="tag">الجواب<small>سقوط السؤال</small></div>
+        <p><span class="rubric">قيل:</span> <span class="marked">هذا سؤال ساقط</span>، والأمر فيه خارج عما جرت به عادات الناس، خواصهم وعوامهم من نقل الأخبار، والتحدث بالأمور التى لها شأن، وبالنفوس تعلق، ولها فيها وقع.</p>
+      </section>
+
+      <section class="pull">
+        <div class="tag">الاحتجاج بالعادة</div>
+        <blockquote>وكيف يجوز ذلك عليهم فى مثل هذا الأمر العظيم الذى قد انزعجت له القلوب وسار ذكره <em>بين الخافقين</em>!</blockquote>
+      </section>
+
+      <section class="step">
+        <div class="tag">الإلزام<small>لازم الدعوى</small></div>
+        <p>ولو جاز ذلك فى مثل هذا الشأن مع عظيم خطره وجلالة قدره لجاز أن يكون قد خرج فى ذلك العصر نبي آخر، وأنبياء ذوو عدد، وتنزلت عليهم كتب من السماء، وجاءوا بشرائع مخالفة لهذه الشريعة، وكتم الخبر فيها فلم يظهر.</p>
+      </section>
+
+      <section class="step">
+        <div class="tag">النتيجة<small>بطلان اللازم</small></div>
+        <p>وهذا ما لا يتوهم أن يكون لخروجه من سوم الطباع ومجارى العادات.</p>
+      </section>
+    </div>
+
+    <div class="closing">
+      <div class="rule" aria-hidden="true"><svg><use href="#star8"/></svg></div>
+      <p class="seal">فكذلك ما سألونا عنه</p>
+    </div>
+
+    <footer>
+      <span><b>الخطابي</b> · بيان إعجاز القرآن</span>
+      <span>ت ٣٨٨ هـ</span>
+    </footer>
+  </article>
+</div>
+
+<script>
+(function () {
+  const canvas = document.getElementById("sketch");
+  const ctx = canvas.getContext("2d");
+
+  function mulberry(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  let r = mulberry(388);
+  const j = (a) => (r() - 0.5) * a;
+
+  // A hand-ruled line: two slightly offset passes with a faint bow.
+  function line(x1, y1, x2, y2, passes = 2) {
+    for (let p = 0; p < passes; p++) {
+      const mx = (x1 + x2) / 2 + j(2.2), my = (y1 + y2) / 2 + j(2.2);
+      ctx.beginPath();
+      ctx.moveTo(x1 + j(1.5), y1 + j(1.5));
+      ctx.quadraticCurveTo(mx, my, x2 + j(1.5), y2 + j(1.5));
+      ctx.stroke();
+    }
+  }
+
+  // A compass circle that overshoots its start, as a hand-turned compass does.
+  function circle(cx, cy, R, from = 0, to = Math.PI * 2, passes = 2) {
+    for (let p = 0; p < passes; p++) {
+      const start = from + j(0.15), end = to + (to - from > 6 ? 0.12 + r() * 0.15 : 0);
+      const drift = j(R * 0.012);
+      ctx.beginPath();
+      const steps = Math.max(24, Math.floor(R * (end - start) / 4));
+      for (let i = 0; i <= steps; i++) {
+        const a = start + (end - start) * (i / steps);
+        const rr = R + drift * Math.sin(a * 2 + p);
+        const x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr;
+        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.stroke();
+    }
+  }
+
+  function dot(x, y) {
+    ctx.beginPath();
+    ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Construction of an eight-pointed star: circle, two squares, the {8/3} star, guides.
+  function star8(cx, cy, R) {
+    circle(cx, cy, R);
+    circle(cx, cy, R * 1.08, 0, Math.PI * 2, 1);
+    const pts = [];
+    for (let i = 0; i < 8; i++) {
+      const a = i * Math.PI / 4 + Math.PI / 8;
+      pts.push([cx + Math.cos(a) * R, cy + Math.sin(a) * R]);
+    }
+    for (let i = 0; i < 8; i++) line(...pts[i], ...pts[(i + 2) % 8]);
+    for (let i = 0; i < 8; i++) line(...pts[i], ...pts[(i + 3) % 8]);
+    ctx.save();
+    ctx.globalAlpha *= 0.55;
+    for (let i = 0; i < 8; i++) {
+      const a = i * Math.PI / 4;
+      line(cx - Math.cos(a) * R * 1.25, cy - Math.sin(a) * R * 1.25, cx + Math.cos(a) * R * 1.25, cy + Math.sin(a) * R * 1.25, 1);
+    }
+    circle(cx, cy, R * 0.383, 0, Math.PI * 2, 1);
+    circle(cx, cy, R * 0.707, 0, Math.PI * 2, 1);
+    for (const [x, y] of pts) circle(x, y, R * 0.2, 0, Math.PI * 2, 1);
+    ctx.restore();
+    for (const [x, y] of pts) dot(x, y);
+    dot(cx, cy);
+  }
+
+  // An astrolabe face: limb rings, degree ticks, almucantar arcs and the rule.
+  function astrolabe(cx, cy, R) {
+    circle(cx, cy, R);
+    circle(cx, cy, R * 0.9);
+    circle(cx, cy, R * 0.62, 0, Math.PI * 2, 1);
+    for (let d = 0; d < 360; d += 5) {
+      const a = d * Math.PI / 180;
+      const inner = d % 30 === 0 ? R * 0.84 : d % 10 === 0 ? R * 0.88 : R * 0.93;
+      line(cx + Math.cos(a) * inner, cy + Math.sin(a) * inner, cx + Math.cos(a) * R, cy + Math.sin(a) * R, 1);
+    }
+    ctx.save();
+    ctx.globalAlpha *= 0.7;
+    for (let k = 1; k <= 5; k++) {
+      const off = R * 0.12 * k, rr = R * (0.62 - k * 0.07);
+      circle(cx, cy - off * 0.6, rr, Math.PI * 0.05, Math.PI * 0.95, 1);
+    }
+    ctx.restore();
+    line(cx - R * 1.05, cy, cx + R * 1.05, cy);
+    line(cx, cy - R * 1.05, cx, cy + R * 1.05, 1);
+    const ra = -Math.PI * 0.28;
+    line(cx - Math.cos(ra) * R * 1.12, cy - Math.sin(ra) * R * 1.12, cx + Math.cos(ra) * R * 1.12, cy + Math.sin(ra) * R * 1.12);
+    circle(cx, cy, R * 0.035, 0, Math.PI * 2, 1);
+
+    ctx.font = `${Math.max(11, R * 0.055)}px Amiri, serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const nums = ["٠", "٣٠", "٦٠", "٩٠", "١٢٠", "١٥٠", "١٨٠", "٢١٠", "٢٤٠", "٢٧٠", "٣٠٠", "٣٣٠"];
+    nums.forEach((n, i) => {
+      const a = i * Math.PI / 6;
+      ctx.fillText(n, cx + Math.cos(a) * R * 0.77, cy + Math.sin(a) * R * 0.77);
+    });
+  }
+
+  function arcs(w, h) {
+    ctx.save();
+    ctx.globalAlpha *= 0.6;
+    for (let i = 0; i < 7; i++) {
+      const cx = r() * w, cy = r() * h, R = 40 + r() * Math.min(w, h) * 0.25;
+      const a = r() * Math.PI * 2;
+      circle(cx, cy, R, a, a + 0.4 + r() * 0.9, 1);
+      dot(cx, cy);
+    }
+    ctx.restore();
+  }
+
+  function draw() {
+    r = mulberry(388);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = window.innerWidth, h = window.innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    const cs = getComputedStyle(document.documentElement);
+    const color = cs.getPropertyValue("--sketch").trim() || "#5B4A2E";
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.globalAlpha = parseFloat(cs.getPropertyValue("--sketch-alpha")) || 0.2;
+    ctx.lineWidth = 0.8;
+    ctx.lineCap = "round";
+
+    const m = Math.min(w, h), narrow = w < 640;
+    star8(w * (narrow ? 0.92 : 0.9), h * 0.2, m * (narrow ? 0.36 : 0.3));
+    astrolabe(w * (narrow ? 0.05 : 0.09), h * 0.86, m * (narrow ? 0.42 : 0.36));
+    star8(w * 0.08, h * 0.12, m * 0.09);
+    arcs(w, h);
+  }
+
+  let pending = 0;
+  const schedule = () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(draw); };
+  window.addEventListener("resize", schedule);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", schedule);
+  new MutationObserver(schedule).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  draw();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+})();
+</script>
